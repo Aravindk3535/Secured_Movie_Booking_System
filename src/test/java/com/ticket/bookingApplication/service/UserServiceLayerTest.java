@@ -7,6 +7,7 @@ import com.ticket.bookingApplication.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -100,6 +101,25 @@ class UserServiceLayerTest {
 
         assertEquals("User saved successfully", result);
 
-        verify(userRepo).save(user);
+        ArgumentCaptor<User> captor =
+                ArgumentCaptor.forClass(User.class);
+
+        verify(userRepo).save(captor.capture());
+
+        User savedUser = captor.getValue();
+
+        assertEquals("hashedPassword123", savedUser.getPassword());
+    }
+
+    @Test
+    void shouldDeleteUser() {
+        when(userRepo.findById(user.getUserId()))
+                .thenReturn(Optional.of(user));
+
+        String result = userService.deleteUser(user.getUserId());
+
+        assertEquals("User deleted successfully", result);
+
+        verify(userRepo).deleteById(user.getUserId());
     }
 }
