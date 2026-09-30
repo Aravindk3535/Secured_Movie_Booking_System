@@ -22,6 +22,6 @@ public class Show {
     @JoinColumn(name = "theatreId")
     private Theatre theatre;
     private LocalDateTime localDateTime;
-    private Double ticketPrice;
+
 
 }

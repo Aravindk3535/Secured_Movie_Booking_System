@@ -16,13 +16,11 @@ public class ShowResponseDTO {
     private String movieName;
     private String theatreName;
     private LocalDateTime showTime;
-    private Double ticketPrice;
 
-    public ShowResponseDTO(Long showId, String movieName, String theatreName, LocalDateTime showTime, Double ticketPrice) {
+    public ShowResponseDTO(Long showId, String movieName, String theatreName, LocalDateTime showTime) {
         this.showId = showId;
         this.movieName = movieName;
         this.theatreName =theatreName;
         this.showTime = showTime;
-        this.ticketPrice =ticketPrice;
     }
 }

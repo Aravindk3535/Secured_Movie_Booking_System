@@ -1,5 +1,6 @@
 package com.ticket.bookingApplication.model;
 
+import com.ticket.bookingApplication.enums.SeatStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +28,9 @@ public class Seat {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "show_Id")
     private Show show;
-    private boolean isBooked;
+    @Enumerated(EnumType.STRING)
+    private SeatStatus status;
+    private double price;
 
 }
 

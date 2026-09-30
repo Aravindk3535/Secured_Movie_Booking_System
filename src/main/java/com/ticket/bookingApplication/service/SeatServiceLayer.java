@@ -1,6 +1,7 @@
 package com.ticket.bookingApplication.service;
 
 import com.ticket.bookingApplication.dto.SeatRequestDTO;
+import com.ticket.bookingApplication.enums.SeatStatus;
 import com.ticket.bookingApplication.exception.ResourceNotFoundException;
 import com.ticket.bookingApplication.model.Seat;
 import com.ticket.bookingApplication.model.Show;
@@ -36,7 +37,7 @@ public class SeatServiceLayer {
             Seat addseat = new Seat();
             addseat.setSeatNumber(seat);
             addseat.setShow(show);
-            addseat.setBooked(false);
+            addseat.setStatus(SeatStatus.AVAILABLE);
             seats.add(addseat);
         }
         seatRepo.saveAll(seats);
@@ -58,15 +59,17 @@ public class SeatServiceLayer {
 
     public Seat editSeat(Long id, SeatRequestDTO requestDTO) {
         if (seatRepo.existsById(id)) {
-            Optional<Seat> optionalSeat = seatRepo.findById(id);
+            Seat seat = seatRepo.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Seat not found with this id " + requestDTO.getSeatId()));
             Show show = showRepo.findById(requestDTO.getShowId())
                     .orElseThrow(() -> new ResourceNotFoundException("Seat not found with this id " + requestDTO.getShowId()));
-            optionalSeat.get().setSeatNumber(requestDTO.getSeatNumber());
-            optionalSeat.get().setShow(show);
-            optionalSeat.get().setBooked(requestDTO.isBooked());
-            seatRepo.save(optionalSeat.get());
-            return optionalSeat.get();
+            seat.setSeatNumber(requestDTO.getSeatNumber());
+            seat.setShow(show);
+            seat.setStatus(SeatStatus.AVAILABLE);
+            seatRepo.save(seat);
+            return seat;
         }
+
         throw new ResourceNotFoundException("Seat not found with this id " + id);
     }
 }

@@ -22,7 +22,7 @@ public class BookingController {
     }
 
     @PostMapping("/createBooking")
-    public String createBooking(@RequestBody BookingRequestDTO bookingRequestDTO) {
+    public BookingResponseDTO createBooking(@RequestBody BookingRequestDTO bookingRequestDTO) {
         return bookingService.createBooking(bookingRequestDTO);
     }
 

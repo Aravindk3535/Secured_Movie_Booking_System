@@ -7,6 +7,7 @@ public class ModelConvertor {
     public static BookingResponseDTO bookingResponseDTO(Booking booking) {
         return new BookingResponseDTO(
                 booking.getUserId(),
+                booking.getUserId(),
                 booking.getStatus(),
                 booking.getTotalAmount(),
                 booking.getSeats(),
@@ -20,8 +21,7 @@ public class ModelConvertor {
                 show.getShowId(),
                 show.getMovie().getTittle(),
                 show.getTheatre().getTheatreName(),
-                show.getLocalDateTime(),
-                show.getTicketPrice()
+                show.getLocalDateTime()
         );
     }
 }
