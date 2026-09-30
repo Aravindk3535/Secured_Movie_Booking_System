@@ -1,6 +1,8 @@
 package com.ticket.bookingApplication.model;
 
 import com.ticket.bookingApplication.dto.BookingRequestDTO;
+import com.ticket.bookingApplication.enums.BookingStatus;
+import com.ticket.bookingApplication.enums.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +34,8 @@ public class Booking {
     @Column(name = "seat_id")
     private List<Long> seats;
     private Double totalAmount;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private BookingStatus status;
 
     public Booking(Long userId, Show show, List<Long> seat, Double totalAmount) {
         this.userId = userId;
@@ -45,7 +48,7 @@ public class Booking {
         setShow(bookingRequestDTO.getShow());
         setSeats(bookingRequestDTO.getSeatId());
         setUserId(bookingRequestDTO.getUserId());
-        setStatus("Success");
+        setStatus(BookingStatus.PAYMENT_PENDING);
         setTotalAmount(bookingRequestDTO.getAmount());
     }
 

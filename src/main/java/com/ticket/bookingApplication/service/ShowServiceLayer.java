@@ -64,7 +64,6 @@ public class ShowServiceLayer {
         addShow.setMovie(movie);
         addShow.setTheatre(theatre);
         addShow.setLocalDateTime(show.getLocalDateTime());
-        addShow.setTicketPrice(show.getTicketPrice());
         validateShows(addShow);
         showRepo.save(addShow);
         return "Show Created successfully";
@@ -93,7 +92,6 @@ public class ShowServiceLayer {
         updateShow.setShowId(show.getShowId());
         updateShow.setMovie(movie);
         updateShow.setTheatre(theatre);
-        updateShow.setTicketPrice(show.getTicketPrice());
         updateShow.setLocalDateTime(show.getLocalDateTime());
         validateShows(updateShow);
         showRepo.save(updateShow);
