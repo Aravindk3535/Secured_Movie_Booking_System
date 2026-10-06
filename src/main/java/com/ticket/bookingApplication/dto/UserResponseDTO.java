@@ -14,7 +14,8 @@ public class UserResponseDTO {
     private String userName;
     private String email;
 
-    public UserResponseDTO(String userName, String email) {
+    public UserResponseDTO(Long userId, String userName, String email) {
+        this.userId = userId;
         this.userName = userName;
         this.email = email;
     }

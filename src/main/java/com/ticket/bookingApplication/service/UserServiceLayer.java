@@ -21,13 +21,12 @@ public class UserServiceLayer {
     }
 
     public UserResponseDTO getUserById(Long id) {
-        Optional<User> user = userRepository.findById(id);
-        if (user.isEmpty()) {
-            throw new ResourceNotFoundException("User by this Id is not found " + id);
-        }
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User by this Id is not found " + id));
         return new UserResponseDTO(
-                user.get().getName(),
-                user.get().getEmail()
+                user.getUserId(),
+                user.getName(),
+                user.getEmail()
         );
     }
 
@@ -53,6 +52,7 @@ public class UserServiceLayer {
         List<UserResponseDTO> userDTOList = new ArrayList<>();
         for (User user : userRepository.findAll()) {
             UserResponseDTO userDTO = new UserResponseDTO(
+                    user.getUserId(),
                     user.getName(),
                     user.getEmail()
             );
@@ -65,18 +65,16 @@ public class UserServiceLayer {
     }
 
     public String editUser(Long id, User user) {
-        Optional<User> existingUser = userRepository.findById(id);
-        if (existingUser.isEmpty()) {
-            throw new ResourceNotFoundException("User by this Id is not found " + id);
-        }
-        existingUser.get().setFirstName(user.getFirstName());
-        existingUser.get().setLastName(user.getLastName());
-        existingUser.get().setName(user.getName());
-        existingUser.get().setEmail(user.getEmail());
-        existingUser.get().setAge(user.getAge());
-        existingUser.get().setPassword(passwordEncoder.encode(user.getPassword()));
-        existingUser.get().setGender(user.getGender());
-        existingUser.get().setRole(user.getRole());
+        User existingUser = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User by this Id is not found " + id));
+
+        existingUser.setFirstName(user.getFirstName());
+        existingUser.setLastName(user.getLastName());
+        existingUser.setName(user.getName());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setAge(user.getAge());
+        existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        existingUser.setGender(user.getGender());
+        existingUser.setRole(user.getRole());
         return "Changes saved successfully";
     }
 

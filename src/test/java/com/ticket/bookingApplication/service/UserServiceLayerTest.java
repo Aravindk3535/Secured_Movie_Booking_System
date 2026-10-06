@@ -37,6 +37,7 @@ class UserServiceLayerTest {
     @BeforeEach
     void setUserService() {
         user = new User();
+        user.setUserId(1L);
         user.setFirstName("Aravind");
         user.setLastName("Vardhan");
         user.setName(user.getFirstName() + " " + user.getLastName());
@@ -121,5 +122,16 @@ class UserServiceLayerTest {
         assertEquals("User deleted successfully", result);
 
         verify(userRepo).deleteById(user.getUserId());
+    }
+
+    @Test
+    void shouldEditUser() {
+        when(userRepo.findById(user.getUserId()))
+                .thenReturn(Optional.of(user));
+        String result = userService.editUser(user.getUserId(), user);
+
+        assertEquals("Changes saved successfully", result);
+
+        verify(userRepo).findById(user.getUserId());
     }
 }
