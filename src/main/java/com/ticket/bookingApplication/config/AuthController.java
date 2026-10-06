@@ -1,5 +1,6 @@
 package com.ticket.bookingApplication.config;
 
+import com.ticket.bookingApplication.dto.LoginRequestDTO;
 import com.ticket.bookingApplication.model.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,14 +23,14 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User user) {
+    public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        user.getEmail(),
-                        user.getPassword()
+                        loginRequestDTO.email(),
+                        loginRequestDTO.password()
                 )
         );
-        String token = jwtServc.generateToken(user.getEmail());
+        String token = jwtServc.generateToken(loginRequestDTO.email());
 
         return ResponseEntity.ok(token);
     }

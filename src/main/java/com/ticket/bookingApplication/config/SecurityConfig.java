@@ -29,6 +29,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/home").permitAll()
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers("/createAccount").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -45,4 +46,7 @@ public class SecurityConfig {
     AuthenticationManager manager(AuthenticationConfiguration configuration) {
         return configuration.getAuthenticationManager();
     }
+
+    //"email": "aravind@example.com",
+    // "password": "Test@123"
 }

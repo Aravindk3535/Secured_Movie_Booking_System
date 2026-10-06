@@ -66,7 +66,7 @@ public class TheatreServiceLayer {
         if (!theatreList.isEmpty()) {
             for (Theatre theatre1 : theatreList) {
                 if (theatre1.getTheatreName().equals(name) && theatre1.getLocation().equals(location)) {
-                    throw new ApplicationException("Movie name and location are already been created");
+                    throw new ApplicationException("Theatre name and location are already been created");
                 }
             }
         }
